@@ -43,7 +43,7 @@ function parseRSS(xml: string): Article[] {
     const tag = categoryMatch ? categoryMatch[1].trim() : "Design";
 
     // Extract first CDN image from content
-    const imgMatch = htmlBody.match(/src="((?:https:)?//cdn-images[^"\s]+)"/);
+    const imgMatch = htmlBody.match(/src="((?:https:)?\/\/cdn-images[^"\s]+)"/);
     const image = imgMatch ? imgMatch[1].split("&")[0] : null;
 
     if (title && href) {
