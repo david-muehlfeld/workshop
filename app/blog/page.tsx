@@ -4,17 +4,33 @@ import type { Article } from "../api/blog/route";
 
 async function getArticles(): Promise<Article[]> {
   try {
-    const baseUrl =
-      process.env.NEXT_PUBLIC_SITE_URL ||
-      (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
-
-    const res = await fetch(`${baseUrl}/api/blog`, {
+    const res = await fetch("https://medium.com/feed/@davidmuehlfeld", {
       next: { revalidate: 3600 },
     });
-
-    if (!res.ok) throw new Error("API error");
-    const data = await res.json();
-    return data.articles ?? [];
+    if (!res.ok) throw new Error();
+    const xml = await res.text();
+    const items: Article[] = [];
+    const itemRegex = /<item>([\s\S]*?)<\/item>/g;
+    let match;
+    while ((match = itemRegex.exec(xml)) !== null) {
+      const item = match[1];
+      const t = item.match(/<title><!\[CDATA\[([\s\S]*?)\]\]><\/title>/);
+      const l = item.match(/<link>([\s\S]*?)<\/link>/);
+      const c = item.match(/<content:encoded><!\[CDATA\[([\s\S]*?)\]\]>/);
+      const cat = item.match(/<category><!\[CDATA\[([\s\S]*?)\]\]><\/category>/);
+      if (!t || !l) continue;
+      const htmlBody = c?.[1] || "";
+      const img = htmlBody.match(/src="(https:\/\/cdn-images[^"\s]+)"/);
+      items.push({
+        index: String(items.length + 1).padStart(2, "0"),
+        title: t[1].trim(),
+        href: l[1].trim().split("?")[0],
+        tag: cat?.[1].trim() ?? "Design",
+        description: htmlBody.replace(/<[^>]*>/g, "").slice(0, 160) + "…",
+        image: img ? img[1].split("&")[0] : null,
+      });
+    }
+    return items.slice(0, 4);
   } catch {
     return [];
   }
