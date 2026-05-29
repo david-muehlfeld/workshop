@@ -145,7 +145,7 @@ export const work = {
 };
 
 export const blog = {
-  headline: "Writing",
+  headline: "Blog",
   subheadline: "Thoughts on product design, UX, and leadership. Published on Medium.",
   profileHref: "https://medium.com/@davidmuehlfeld",
   fallbackArticles: [
