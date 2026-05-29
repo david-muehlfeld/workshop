@@ -1,16 +1,34 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-  content: ["./app/**/*.{ts,tsx}"],
+  content: [
+    "./app/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+  ],
   theme: {
     extend: {
       colors: {
-        ink: "#0f0f0f",
-        paper: "#fafaf7",
-        accent: "#3b82f6",
+        bg: "#f9f7f4",
+        surface: "#f0ede8",
+        "bg-hover": "#e8e4dd",
+        primary: "#1c1917",
+        secondary: "#78716c",
+        accent: "#9a7235",
+        "accent-light": "#c9a96e",
+        border: "#dcd8d2",
+        "border-hover": "#b8b3ac",
       },
       fontFamily: {
-        sans: ["ui-sans-serif", "system-ui", "sans-serif"],
+        display: ["var(--font-cormorant)", "Georgia", "serif"],
+        ui: ["var(--font-dm-mono)", "monospace"],
+        body: ["var(--font-dm-sans)", "system-ui", "sans-serif"],
+        sans: ["var(--font-dm-sans)", "system-ui", "sans-serif"],
+      },
+      maxWidth: {
+        container: "1200px",
+      },
+      spacing: {
+        section: "6rem",
       },
     },
   },
