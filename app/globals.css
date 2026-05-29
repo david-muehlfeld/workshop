@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #f9f7f4;
+  --bg-surface: #f0ede8;
+  --bg-hover: #e8e4dd;
+  --text-primary: #1c1917;
+  --text-secondary: #78716c;
+  --accent: #9a7235;
+  --accent-light: #c9a96e;
+  --border: #dcd8d2;
+  --border-hover: #b8b3ac;
+  --section-gap: 6rem;
+  --container-max: 1200px;
+  --container-padding: 2rem;
+}
+
+html {
+  background-color: var(--bg);
+  color: var(--text-primary);
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background-color: var(--accent);
+  color: var(--bg);
+}
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--border-hover); }
+
+@layer utilities {
+  .container-site {
+    @apply mx-auto max-w-container px-8;
+  }
+}
